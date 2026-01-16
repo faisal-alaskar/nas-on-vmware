@@ -298,6 +298,193 @@ You can:
 
 ---
 
-## Contributing
 
-Suggestions, improvements, and pull requests are welcome.
+## 🛠️ Troubleshooting – Common Issues & Fixes
+
+This section covers the most common problems you may face while setting up or running a NAS on VMware using TrueNAS SCALE, along with practical solutions.
+
+---
+
+### ❌ TrueNAS does not get an IP address
+
+**Possible cause:**
+
+* Incorrect network configuration in VMware
+
+**Fix:**
+
+* Make sure:
+
+  ```
+  Network Adapter = Bridged
+  ```
+* Restart the VM
+* Verify the bridged adapter is bound to the correct physical LAN interface
+
+---
+
+### ❌ Cannot access the TrueNAS web interface
+
+**Check the following:**
+
+* The VM is running
+* You are using:
+
+  ```
+  http://IP-ADDRESS
+  ```
+* Try accessing from another device on the same network
+* Ensure the Windows firewall is not blocking the connection
+
+---
+
+### ❌ Physical disk not visible inside TrueNAS
+
+**Common reasons:**
+
+* Disk is still mounted or in use by Windows
+* Disk was not passed correctly to the VM
+
+**Fix:**
+
+* Open **Disk Management** in Windows
+* Make sure the disk is:
+
+  * Offline
+  * Has no drive letter
+* Restart VMware
+* Reboot the TrueNAS VM
+
+⚠️ **Never use the same disk simultaneously in Windows and TrueNAS**
+
+---
+
+### ❌ Wrong disk selected during TrueNAS installation
+
+**Result:**
+
+* Data on that disk is erased
+
+**Fix:**
+
+* Unfortunately, there is no recovery
+* Always:
+
+  * Use a small virtual disk (40GB) for the OS
+  * Use a separate physical disk for storage
+
+---
+
+### ❌ Permission denied when writing or uploading files
+
+**Cause:**
+
+* Incorrect dataset permissions
+
+**Fix:**
+
+1. Go to the dataset
+2. Edit Permissions
+3. Ensure the user has:
+
+   * Read / Write access
+4. Enable:
+
+   ```
+   Apply permissions recursively
+   ```
+
+---
+
+### ❌ SMB share is visible but not accessible
+
+**Verify:**
+
+* SMB service is running
+* Correct username and password are used
+
+**Fix:**
+
+* Services → SMB → Start
+* Reconnect from the client device
+
+---
+
+### ❌ Slow transfer speeds
+
+**Possible causes:**
+
+* Weak Wi-Fi connection
+* Insufficient VM resources
+
+**Fixes:**
+
+* Use wired LAN instead of Wi-Fi
+* Ensure the iPhone is connected to 5GHz Wi-Fi
+* Increase VM RAM to 8GB or more
+* Avoid USB 2.0 drives for storage
+
+---
+
+### ❌ TrueNAS freezes or shuts down unexpectedly
+
+**Possible causes:**
+
+* Insufficient RAM
+* Host system under heavy load
+
+**Fix:**
+
+* Increase RAM allocation
+* Disable sleep/hibernation on the host PC
+* Turn off aggressive power-saving settings in Windows
+
+---
+
+### ❌ iPhone photos do not fully transfer
+
+**Possible cause:**
+
+* iPhone or network going to sleep
+
+**Fix:**
+
+* Disable Auto-Lock during transfer
+* Keep the phone plugged into a charger
+* Transfer large libraries in batches
+
+---
+
+### ❌ SMART warnings or disk health alerts
+
+**Important:**
+
+* Do not ignore these alerts
+
+**Fix:**
+
+* Run a SMART test
+* Back up data immediately
+* Consider replacing the disk
+
+---
+
+## ✅ General Best Practices
+
+* Never use the same disk for OS and data
+* Always have at least one backup
+* Do not expose the NAS directly to the internet
+* Use a static IP address
+* Monitor disk health regularly
+
+---
+
+## 📌 Final Note
+
+If you encounter an issue not listed here:
+
+* Open an Issue in the repository
+* Or contribute a fix via Pull Request
+
+Sharing real-world issues helps improve this project for everyone 🤝
+
